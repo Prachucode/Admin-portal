@@ -15,7 +15,6 @@ export async function load() {
 
 }
 
-import { fail } from "@sveltejs/kit";
 
 export const actions = {
 	addMember: async ({ request }) => {
