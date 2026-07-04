@@ -18,8 +18,16 @@
 			content: ""
 		};
 	}
+	function formatDate(date) {
+	return new Date(date).toLocaleDateString("en-IN", {
+		day: "numeric",
+		month: "short",
+		year: "numeric"
+	});
+}
 	let showDeleteModal = $state(false);
 	let deleteId = $state("");
+	let expandedBlog = $state("");
 </script>
 
 <div class="bg-white rounded-xl shadow p-6 mb-8">
@@ -112,10 +120,33 @@
 		<h2 class="text-2xl font-bold text-gray-800 mb-4">
 			{blog.title}
 		</h2>
+		<p class="text-sm text-gray-500 mb-4">
+	📅 {formatDate(blog.createdAt)}
+</p>
+		<p class="text-gray-600 leading-relaxed whitespace-pre-wrap">
+	{#if expandedBlog === blog._id}
+		{blog.content}
+	{:else}
+		{blog.content.length > 180
+			? blog.content.slice(0, 180) + "..."
+			: blog.content}
+	{/if}
+</p>
 
-		<p class="text-gray-600 flex-1 line-clamp-6 whitespace-pre-wrap">
-			{blog.content}
-		</p>
+{#if blog.content.length > 180}
+
+<button
+	type="button"
+	class="mt-3 text-blue-600 font-medium hover:underline self-start"
+	onclick={() =>
+		expandedBlog =
+			expandedBlog === blog._id ? "" : blog._id
+	}
+>
+	{expandedBlog === blog._id ? "Show Less" : "Read More"}
+</button>
+
+{/if}
 
 		<div class="flex gap-3 mt-6">
 

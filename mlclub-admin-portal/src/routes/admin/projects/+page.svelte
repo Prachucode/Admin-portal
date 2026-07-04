@@ -117,8 +117,6 @@
 
 <h1 class="text-3xl font-bold mb-6">Projects</h1>
 
-<h1 class="text-3xl font-bold mb-6">Projects</h1>
-
 {#if data.projects.length === 0}
 
 <div class="bg-white rounded-2xl shadow p-10 text-center">
@@ -160,7 +158,7 @@
 				target="_blank"
 				class="flex-1 text-center bg-gray-900 text-white py-2 rounded-lg hover:bg-black transition"
 			>
-				GitHub
+				GitHub Repo
 			</a>
 
 			{/if}
@@ -172,7 +170,7 @@
 				target="_blank"
 				class="flex-1 text-center bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
 			>
-				Live Demo
+				Live URL
 			</a>
 
 			{/if}
