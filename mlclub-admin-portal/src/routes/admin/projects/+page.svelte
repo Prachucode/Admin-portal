@@ -117,113 +117,98 @@
 
 <h1 class="text-3xl font-bold mb-6">Projects</h1>
 
-<div class="bg-white rounded-xl shadow overflow-x-auto">
+<h1 class="text-3xl font-bold mb-6">Projects</h1>
 
-	<table class="w-full">
+{#if data.projects.length === 0}
 
-		<thead class="bg-gray-100">
+<div class="bg-white rounded-2xl shadow p-10 text-center">
 
-			<tr>
-				<th class="p-4 text-left">Title</th>
-				<th class="p-4 text-left">Description</th>
-				<th class="p-4 text-left">Github</th>
-				<th class="p-4 text-left">Live URL</th>
-				<th class="p-4 text-left">Actions</th>
-			</tr>
+	<h2 class="text-xl font-semibold text-gray-700">
+		No Projects Found
+	</h2>
 
-		</thead>
+	<p class="mt-2 text-gray-500">
+		Add your first project using the form above.
+	</p>
 
-		<tbody>
+</div>
 
-			{#if data.projects.length === 0}
+{:else}
 
-				<tr>
-					<td colspan="5" class="p-6 text-center">
-						No Projects Found
-					</td>
-				</tr>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
 
-			{:else}
+	{#each data.projects as project}
 
-				{#each data.projects as project}
+	<div
+		class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-6 flex flex-col"
+	>
 
-					<tr class="border-t">
+		<h2 class="text-2xl font-bold text-gray-800 mb-3">
+			{project.title}
+		</h2>
 
-						<td class="p-4">
-							{project.title}
-						</td>
+		<p class="text-gray-600 flex-1">
+			{project.description}
+		</p>
 
-						<td class="p-4">
-							{project.description}
-						</td>
+		<div class="flex gap-3 mt-6">
 
-						<td class="p-4">
-							<a
-								href={project.github}
-								target="_blank"
-								class="text-blue-600 underline"
-							>
-								Github
-							</a>
-						</td>
+			{#if project.github}
 
-						<td class="p-4">
-							<a
-								href={project.URL}
-								target="_blank"
-								class="text-green-600 underline"
-							>
-								Visit
-							</a>
-						</td>
-
-						<td class="p-4 flex gap-2">
-
-							<button
-								type="button"
-								class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
-								onclick={() => editProject(project)}
-							>
-								Edit
-							</button>
-
-							<form
-								method="POST"
-								action="?/deleteProject"
-							>
-
-								<input
-									type="hidden"
-									name="id"
-									value={project._id}
-								/>
-
-								<button
-	type="button"
-	class="bg-red-600 text-white px-3 py-1 rounded"
-	onclick={() => {
-		deleteId = project._id;
-		showDeleteModal = true;
-	}}
->
-	Delete
-</button>
-
-							</form>
-
-						</td>
-
-					</tr>
-
-				{/each}
+			<a
+				href={project.github}
+				target="_blank"
+				class="flex-1 text-center bg-gray-900 text-white py-2 rounded-lg hover:bg-black transition"
+			>
+				GitHub
+			</a>
 
 			{/if}
 
-		</tbody>
+			{#if project.URL}
 
-	</table>
+			<a
+				href={project.URL}
+				target="_blank"
+				class="flex-1 text-center bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
+			>
+				Live Demo
+			</a>
+
+			{/if}
+
+		</div>
+
+		<div class="flex gap-3 mt-5">
+
+			<button
+				type="button"
+				class="flex-1 bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition"
+				onclick={() => editProject(project)}
+			>
+				Edit
+			</button>
+
+			<button
+				type="button"
+				class="flex-1 bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition"
+				onclick={() => {
+					deleteId = project._id;
+					showDeleteModal = true;
+				}}
+			>
+				Delete
+			</button>
+
+		</div>
+
+	</div>
+
+	{/each}
 
 </div>
+
+{/if}
 
 
 {#if showDeleteModal}

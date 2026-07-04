@@ -85,74 +85,68 @@
 
 <h1 class="text-3xl font-bold mb-6">Blogs</h1>
 
-<div class="bg-white rounded-xl shadow overflow-hidden">
+{#if data.blogs.length === 0}
 
-	<table class="w-full">
+<div class="bg-white rounded-2xl shadow p-10 text-center">
 
-		<thead class="bg-gray-100">
+	<h2 class="text-xl font-semibold text-gray-700">
+		No Blogs Found
+	</h2>
 
-			<tr>
-				<th class="p-4">Title</th>
-				<th class="p-4">Content</th>
-				<th class="p-4">Actions</th>
-			</tr>
-
-		</thead>
-
-		<tbody>
-
-			{#each data.blogs as blog}
-
-			<tr class="border-t">
-
-				<td class="p-4">{blog.title}</td>
-
-				<td class="p-4">
-					{blog.content}
-				</td>
-
-				<td class="p-4 flex gap-2">
-
-					<button
-						type="button"
-						class="bg-yellow-500 text-white px-3 py-1 rounded"
-						onclick={() => editBlog(blog)}
-					>
-						Edit
-					</button>
-
-					<form method="POST" action="?/deleteBlog">
-
-						<input
-							type="hidden"
-							name="id"
-							value={blog._id}
-						/>
-
-						<button
-	type="button"
-	class="bg-red-600 text-white px-3 py-1 rounded"
-	onclick={() => {
-		deleteId = blog._id;
-		showDeleteModal = true;
-	}}
->
-	Delete
-</button>
-
-					</form>
-
-				</td>
-
-			</tr>
-
-			{/each}
-
-		</tbody>
-
-	</table>
+	<p class="mt-2 text-gray-500">
+		Add your first blog using the form above.
+	</p>
 
 </div>
+
+{:else}
+
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+	{#each data.blogs as blog}
+
+	<div
+		class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-6 flex flex-col"
+	>
+
+		<h2 class="text-2xl font-bold text-gray-800 mb-4">
+			{blog.title}
+		</h2>
+
+		<p class="text-gray-600 flex-1 line-clamp-6 whitespace-pre-wrap">
+			{blog.content}
+		</p>
+
+		<div class="flex gap-3 mt-6">
+
+			<button
+				type="button"
+				class="flex-1 bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition"
+				onclick={() => editBlog(blog)}
+			>
+				Edit
+			</button>
+
+			<button
+				type="button"
+				class="flex-1 bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition"
+				onclick={() => {
+					deleteId = blog._id;
+					showDeleteModal = true;
+				}}
+			>
+				Delete
+			</button>
+
+		</div>
+
+	</div>
+
+	{/each}
+
+</div>
+
+{/if}
 
 {#if showDeleteModal}
 

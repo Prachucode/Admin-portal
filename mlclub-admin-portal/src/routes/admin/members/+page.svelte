@@ -165,106 +165,123 @@
 
 <h1 class="text-3xl font-bold mb-6">Members</h1>
 
-<div class="bg-white rounded-xl shadow overflow-hidden">
 
-	<table class="w-full">
+{#if data.members.length === 0}
 
-		<thead class="bg-gray-100">
+<div class="bg-white rounded-2xl shadow p-10 text-center">
 
-			<tr>
+	<h2 class="text-xl font-semibold text-gray-700">
+		No Members Found
+	</h2>
 
-				<th class="p-4 text-left">Photo</th>
-				<th class="p-4 text-left">Name</th>
-				<th class="p-4 text-left">Position</th>
-				<th class="p-4 text-left">Year</th>
-				<th class="p-4 text-left">Team</th>
-				<th class="p-4 text-left">LinkedIn</th>
-				<th class="p-4 text-left">Github</th>
-				<th class="p-4 text-left">Actions</th>
-			</tr>
-
-		</thead>
-
-		<tbody>
-
-			{#if data.members.length === 0}
-
-				<tr>
-
-					<td colspan="5" class="text-center p-6">
-						No Members Found
-					</td>
-
-				</tr>
-
-			{:else}
-
-				{#each data.members as member}
-
-					<tr class="border-t">
-
-						<td class="p-4">
-
-							<img
-								src={member.photo}
-								alt={member.name}
-								class="w-14 h-14 rounded-full object-cover"
-							/>
-
-						</td>
-
-						<td class="p-4">{member.name}</td>
-
-						<td class="p-4">{member.position}</td>
-
-						<td class="p-4">{member.year}</td>
-
-						<td class="p-4">{member.team}</td>
-						<td class="p-4"><a href={member.linkedin} target="_blank">{member.linkedin}</a></td>
-						<td class="p-4"><a href={member.github} target="_blank">{member.github}</a></td>
-
-						<td class="p-4">
-							<button
-	type="button"
-	class="bg-yellow-500 text-white px-3 py-1 rounded"
-	onclick={() => editMember(member)}
->
-	Edit
-</button>
-							<form method="POST" action="?/deleteMember">
-
-			<input
-				type="hidden"
-				name="id"
-				value={member._id}
-			/>
-
-			<button
-	type="button"
-	class="bg-red-600 text-white px-3 py-1 rounded"
-	onclick={() => {
-		deleteId = member._id;
-		showDeleteModal = true;
-	}}
->
-	Delete
-</button>
-
-		</form>
-						</td>
-
-					</tr>
-
-				{/each}
-
-			{/if}
-
-		</tbody>
-
-	</table>
+	<p class="text-gray-500 mt-2">
+		Add your first member using the form above.
+	</p>
 
 </div>
 
+{:else}
+
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+	{#each data.members as member}
+
+	<div
+		class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden"
+	>
+
+		<div class="p-6 flex flex-col items-center">
+
+			<img
+				src={member.photo}
+				alt={member.name}
+				class="w-28 h-28 rounded-full object-cover border-4 border-blue-100"
+			/>
+
+			<h2 class="mt-4 text-xl font-bold text-gray-800 text-center">
+				{member.name}
+			</h2>
+
+			<div class="mt-4 flex flex-wrap justify-center gap-2">
+
+				<span
+					class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium"
+				>
+					{member.position}
+				</span>
+
+				<span
+					class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium"
+				>
+					{member.year}
+				</span>
+
+			</div>
+
+			<p class="mt-4 text-gray-600 text-center font-medium">
+				{member.team}
+			</p>
+
+			<div class="mt-5 flex gap-3">
+
+				{#if member.github}
+
+				<a
+					href={member.github}
+					target="_blank"
+					class="px-4 py-2 rounded-lg bg-gray-900 text-white hover:bg-black transition"
+				>
+					GitHub
+				</a>
+
+				{/if}
+
+				{#if member.linkedin}
+
+				<a
+					href={member.linkedin}
+					target="_blank"
+					class="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
+				>
+					LinkedIn
+				</a>
+
+				{/if}
+
+			</div>
+
+			<div class="mt-6 flex gap-3 w-full">
+
+				<button
+					type="button"
+					class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white py-2 rounded-lg font-medium"
+					onclick={() => editMember(member)}
+				>
+					Edit
+				</button>
+
+				<button
+					type="button"
+					class="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg font-medium"
+					onclick={() => {
+						deleteId = member._id;
+						showDeleteModal = true;
+					}}
+				>
+					Delete
+				</button>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	{/each}
+
+</div>
+
+{/if}
 {#if showDeleteModal}
 
 <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
