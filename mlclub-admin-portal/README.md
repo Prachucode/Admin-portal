@@ -7,6 +7,9 @@ A modern admin dashboard and content management portal for the ML Club, built wi
 This application is designed for club administrators to manage the public-facing content of an ML Club website without needing to touch the frontend code directly. The portal supports authentication, protected admin routes, content CRUD operations, and media uploads for member profiles.
 
 Live URL : mlclub-admin-portal.vercel.app
+Test:
+UserId : prachurya_ug_25@ee.nits.ac.in
+Password: 25EE10060
 ## Key Features
 
 - Secure admin authentication with JWT and password hashing
