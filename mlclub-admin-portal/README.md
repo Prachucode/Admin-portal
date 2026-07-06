@@ -8,8 +8,8 @@ This application is designed for club administrators to manage the public-facing
 
 Live URL : mlclub-admin-portal.vercel.app
 Test:
-UserId : prachurya_ug_25@ee.nits.ac.in
-Password: 25EE10060
+UserId : test@user.com
+Password: 1234
 ## Key Features
 
 - Secure admin authentication with JWT and password hashing
