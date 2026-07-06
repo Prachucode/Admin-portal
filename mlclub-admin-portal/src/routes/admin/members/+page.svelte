@@ -37,8 +37,7 @@
 			team: "",
 			position: "",
 			github: "",
-			linkedin: "",
-			photo: ""
+			linkedin: ""
 		};
 	}
 	let showDeleteModal = $state(false);
@@ -55,7 +54,7 @@
 	<form
 	method="POST"
 	enctype="multipart/form-data"
-	class="grid grid-cols-2 gap-4"
+	class="grid grid-cols-1 md:grid-cols-2 gap-4"
 	action={editingMember ? "?/updateMember" : "?/addMember"}
 >
 
@@ -195,7 +194,7 @@
 			<img
 				src={member.photo}
 				alt={member.name}
-				class="w-28 h-28 rounded-full object-cover border-4 border-blue-100"
+				class="w-24 h-24 md:w-28 md:h-28 rounded-full object-cover border-4 border-blue-100"
 			/>
 
 			<h2 class="mt-4 text-xl font-bold text-gray-800 text-center">
@@ -286,7 +285,7 @@
 
 <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
 
-	<div class="bg-white rounded-xl p-6 shadow-xl w-96">
+	<div class="bg-white rounded-xl p-6 shadow-xl w-[90%] max-w-md">
 
 		<h2 class="text-xl font-bold mb-3 text-red-600">
 			Delete Member

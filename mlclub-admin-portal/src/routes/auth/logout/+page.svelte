@@ -22,6 +22,7 @@
 					class="rounded-lg border px-4 py-2 hover:bg-gray-100"
 				>
 					Cancel
+				</button>
 				</form>
                 <form method="POST" action="?/logout">
 				<button

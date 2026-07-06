@@ -1,12 +1,15 @@
 <script>
 	import { page } from '$app/state';
 	import logo from '$lib/assets/logo.png';
+	import { afterNavigate } from '$app/navigation';
 	import {
 		LayoutDashboard,
 		Users,
 		FolderKanban,
 		NotebookPen,
-		LogOut
+		LogOut,
+		Menu, 
+		X
 	} from '@lucide/svelte';
 
 	let { data, children } = $props();
@@ -33,12 +36,21 @@
 			icon: NotebookPen
 		}
 	];
+	let sidebarOpen = $state(false);
+
+	// afterNavigate(() => {
+	// 	sidebarOpen = false;
+	// })
 </script>
 
 <div class="flex h-screen bg-gray-100">
 
 	<!-- Sidebar -->
-	<aside class="w-64 bg-slate-900 text-white flex flex-col">
+	<aside
+	class={`fixed md:static top-0 left-0 z-50 h-screen w-64 bg-slate-900 text-white flex flex-col transition-transform duration-300 ${
+		sidebarOpen ? "translate-x-0" : "-translate-x-full"
+	} md:translate-x-0`}
+>
 
 		<!-- Logo -->
 		<div class="h-16 flex items-center justify-center gap-3 border-b border-slate-700 px-4">
@@ -47,7 +59,14 @@
 				ML Club Admin
 			</h1>
 		</div>
-
+		<button
+		type="button"
+		class="md:hidden"
+		aria-label="Close sidebar"
+		onclick={() => (sidebarOpen = false)}
+	>
+		<X size={24} />
+	</button>
 		<!-- Navigation -->
 		<nav class="flex-1 p-4 space-y-2">
 
@@ -94,15 +113,26 @@
 	<div class="flex flex-col flex-1">
 
 		<!-- Navbar -->
-		<header class="h-16 bg-white shadow flex items-center justify-between px-8">
-
-			<h2 class="text-2xl font-bold">
-				ML Club Dashboard
-			</h2>
+		<header class="h-16 bg-white shadow flex items-center justify-between px-4 md:px-8">
 
 			<div class="flex items-center gap-4">
 
-				<div class="text-right">
+	<button
+		class="md:hidden"
+		onclick={() => (sidebarOpen = !sidebarOpen)}
+	>
+		<Menu size={28} />
+	</button>
+
+	<h2 class="text-xl md:text-2xl font-bold">
+		ML Club Dashboard
+	</h2>
+
+</div>
+
+			<div class="flex items-center gap-4">
+
+				<div class="hidden sm:block text-right">
 
 					<p class="font-semibold">
 						{data.admin?.email}
@@ -125,7 +155,7 @@
 		</header>
 
 		<!-- Page Content -->
-		<main class="flex-1 overflow-auto p-8">
+		<main class="flex-1 overflow-auto p-4 md:p-8">
 			<div class="flex justify-center mb-8">
 				<img src={logo} alt="ML Club Admin logo" class="h-28 w-auto rounded-lg bg-white p-3 shadow-lg" />
 			</div>
